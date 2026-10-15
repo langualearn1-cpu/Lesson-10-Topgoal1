@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write the missing letter & Match - Teacher Majed Al-Swaihri</title>
+    <!-- Tailwind CSS for modern responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for playful, clear educational typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=Cairo:wght@600;700;800;900&family=Titan+One&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --paper-bg: #FCFBF5;
+            --cream-card: #FEF9EB;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #fef7ed 0%, #ecfeff 50%, #fdf2f8 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-fredoka { font-family: 'Fredoka', cursive, sans-serif; }
+        .font-cairo { font-family: 'Cairo', sans-serif; }
+        .font-titan { font-family: 'Titan One', cursive; }
+
+        /* Exact Rainbow Pastel Outer Border matching Teacher Majed's worksheet */
+        .pastel-worksheet-border {
+            background: conic-gradient(
+                from 45deg,
+                #94CCE6 0deg 45deg,
+                #F8B0BD 45deg 90deg,
+                #FEDE80 90deg 140deg,
+                #A2D7B9 140deg 190deg,
+                #D0B5E4 190deg 240deg,
+                #F9B896 240deg 290deg,
+                #94CCE6 290deg 360deg
+            );
+            padding: 12px;
+            border-radius: 36px;
+            box-shadow: 0 24px 60px rgba(30, 41, 59, 0.12);
+        }
+
+        .worksheet-canvas {
+            background-color: var(--paper-bg);
+            background-image: 
+                radial-gradient(#e5dfc7 1.3px, transparent 1.3px),
+                radial-gradient(#f0ecdc 1.3px, var(--paper-bg) 1.3px);
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+            border: 3.5px solid #635b50;
+            border-radius: 28px;
+            position: relative;
+        }
+        /* Wooden hanging board for Teacher Majed Al-Swaihri */
+        .wooden-sign-hang {
+            position: relative;
+            transform: rotate(-3deg);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+        .wooden-sign-hang:hover {
+            transform: rotate(-0.5deg) scale(1.05);
+        }
+        .wooden-plank {
+            background: linear-gradient(180deg, #ecd1b3 0%, #d8ad80 50%, #c49666 100%);
+            border: 2.8px solid #4A2F18;
+            border-radius: 14px;
+            box-shadow: 2px 6px 0px rgba(74, 47, 24, 0.3);
+        }
+
+        /* 3D Comic Titles ("Write the missing letter." & "Match the following") */
+        .comic-section-title {
+            font-family: 'Fredoka', cursive;
+            font-weight: 800;
+            color: #0284C7;
+            text-shadow: 
+                -2px -2px 0 #FFF,
+                 2px -2px 0 #FFF,
+                -2px  2px 0 #FFF,
+                 2px  2px 0 #FFF,
+                 0px  4px 0 #0369A1,
+                 0px  8px 12px rgba(2, 132, 199, 0.35);
+        }
+
+        /* Cream container for Missing Letter exercise */
+        .cream-exercise-card {
+            background: var(--cream-card);
+            border: 3px solid #786B59;
+            border-radius: 26px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.03), 0 8px 18px rgba(0,0,0,0.05);
+        }
+
+        /* Missing Letter Interactive Input Box */
+        .missing-letter-slot {
+            width: 26px;
+            height: 32px;
+            border-bottom: 3px solid #0284C7;
+            background: #FFFFFF;
+            border-radius: 6px 6px 0 0;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-align: center;
+            text-transform: lowercase;
+            color: #0369A1;
+            transition: all 0.2s ease;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 2px;
+            padding: 0;
+            flex-shrink: 0;
+        }
+        .missing-letter-slot:focus {
+            background: #E0F2FE;
+            border-bottom-color: #0284C7;
+            transform: scale(1.08);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
+        }
+        .missing-letter-slot.slot-correct {
+            border-bottom-color: #10B981 !important;
+            color: #047857 !important;
+            background-color: #D1FAE5 !important;
+        }
+        .missing-letter-slot.slot-wrong {
+            border-bottom-color: #EF4444 !important;
+            color: #B91C1C !important;
+            background-color: #FEE2E2 !important;
+            animation: shakeSlot 0.35s ease;
+        }
+
+        @keyframes shakeSlot {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+            75% { transform: translateX(-3px); }
+        }
+        /* Match Table Containers matching the worksheet's pastel purple and pink sides */
+        .matching-box-container {
+            border: 3px solid #786B59;
+            border-radius: 20px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            position: relative;
+        }
+
+        .match-row-left {
+            background-color: #F3F0FF;
+            border: 2px solid #C4B5FD;
+            border-radius: 14px;
+            transition: all 0.22s ease;
+            cursor: pointer;
+        }
+        .match-row-left:hover {
+            background-color: #EDE9FE;
+            border-color: #8B5CF6;
+            transform: translateX(2px);
+        }
+        .match-row-left.is-active-source {
+            background-color: #DDD6FE;
+            border-color: #7C3AED;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
+            transform: scale(1.01);
+        }
+        .match-row-left.is-connected {
+            border-color: #8B5CF6;
+            background-color: #F5F3FF;
+        }
+
+        .match-row-right {
+            background-color: #FFF1F2;
+            border: 2px solid #FECDD3;
+            border-radius: 14px;
+            transition: all 0.22s ease;
+            cursor: pointer;
+        }
+        .match-row-right:hover {
+            background-color: #FFE4E6;
+            border-color: #FB7185;
+            transform: translateX(-2px);
+        }
+        .match-row-right.is-target-hover {
+            background-color: #FECDD3;
+            border-color: #E11D48;
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.3);
+            transform: scale(1.01);
+        }
+
+        /* Dynamic SVG line layer for connecting matched pairs */
+        #connectionSvgCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .connection-bezier-line {
+            stroke-width: 4.5;
+            stroke-linecap: round;
+            fill: none;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            transition: stroke-dashoffset 0.4s ease;
+        }
+
+        /* Realtime Spoken Audio Karaoke Glow */
+        .audio-speaking-text {
+            animation: syncGlow 0.6s infinite ease-in-out;
+            color: #0284C7 !important;
+        }
+        @keyframes syncGlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 150;
+        }
+    </style>
+</head>
+
+<body class="p-2 sm:p-4 md:p-6 flex flex-col items-center">
+
+    <!-- Confetti canvas for celebrations -->
+    <canvas id="confettiCanvas"></canvas>
+    <div class="w-full max-w-5xl pastel-worksheet-border">
+        <div class="worksheet-canvas p-3 sm:p-6 md:p-8">
+
+            <!-- Hand-drawn background paper ornaments matching worksheet (stars, hearts, confetti) -->
+            <div class="pointer-events-none select-none absolute inset-0 overflow-hidden z-0 opacity-80">
+                <svg class="w-full h-full" viewBox="0 0 1000 1450" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Top confetti stars -->
+                    <path d="M75 140L81 152L94 154L84 163L86 176L75 170L64 176L66 163L56 154L69 152L75 140Z" fill="#FDE068" stroke="#444" stroke-width="2"/>
+                    <path d="M925 150L930 160L941 162L933 169L935 180L925 174L915 180L917 169L909 162L920 160L925 150Z" fill="#FDE068" stroke="#444" stroke-width="2"/>
+                    <path d="M40 520L46 532L59 534L49 543L51 556L40 550L29 556L31 543L21 534L34 532L40 520Z" fill="#FDE068" stroke="#444" stroke-width="2"/>
+                    <path d="M960 980L966 992L979 994L969 1003L971 1016L960 1010L949 1016L951 1003L941 994L954 992L960 980Z" fill="#FDE068" stroke="#444" stroke-width="2"/>
+                    <!-- Hearts -->
+                    <path d="M940 370C934 362 922 364 924 375C926 385 940 392 940 392C940 392 954 385 956 375C958 364 946 362 940 370Z" fill="#F8AD9D" stroke="#444" stroke-width="1.8"/>
+                    <path d="M40 760C34 752 22 754 24 765C26 775 40 782 40 782C40 782 54 775 56 765C58 754 46 752 40 760Z" fill="#F696A8" stroke="#444" stroke-width="1.8"/>
+                    <path d="M950 1200C944 1192 932 1194 934 1205C936 1215 950 1222 950 1222C950 1222 964 1215 966 1205C968 1194 956 1192 950 1200Z" fill="#F8AD9D" stroke="#444" stroke-width="1.8"/>
+                    <!-- Confetti coils & ribbons -->
+                    <circle cx="952" cy="560" r="7" fill="#8CD4C6" stroke="#444" stroke-width="1.8"/>
+                    <circle cx="50" cy="220" r="6" fill="#FDE068" stroke="#444" stroke-width="1.8"/>
+                    <rect x="880" y="80" width="16" height="9" rx="2.5" transform="rotate(25 880 80)" fill="#8CD4C6" stroke="#444" stroke-width="1.8"/>
+                    <rect x="30" y="380" width="16" height="9" rx="2.5" transform="rotate(-30 30 380)" fill="#F8AD9D" stroke="#444" stroke-width="1.8"/>
+                </svg>
+            </div>
+
+            <!-- Top Utility Bar: Score, Audio Speed, and Voice Engine -->
+            <div class="relative z-10 flex flex-wrap items-center justify-between gap-2 pb-2.5 mb-3 border-b-2 border-dashed border-amber-200/90 text-xs">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="font-cairo text-xs font-bold text-slate-700">ورقة عمل تفاعلية ناطقة</span>
+                    <span class="text-slate-300">|</span>
+                    <span class="text-[11px] font-extrabold text-sky-700">100% English Natural Audio</span>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <!-- Progress Stars -->
+                    <div class="bg-amber-50 border border-amber-300 rounded-xl px-2.5 py-1 flex items-center gap-1.5 shadow-sm">
+                        <span class="text-base">⭐</span>
+                        <span class="text-[10px] uppercase font-bold text-amber-700">Stars:</span>
+                        <span id="gameScore" class="text-xs font-black text-amber-900">0</span>
+                    </div>
+
+                    <!-- Voice Selector Dropdown -->
+                    <div class="flex items-center gap-1">
+                        <select id="voiceSelector" onchange="onVoiceSelectionChange()" class="bg-white text-slate-800 border border-sky-300 rounded-xl px-2 py-1 text-[11px] font-bold shadow-sm focus:outline-none focus:ring-1 focus:ring-sky-400 max-w-[150px] sm:max-w-[200px] truncate">
+                            <option value="">Default English Voice</option>
+                        </select>
+                    </div>
+
+                    <!-- Audio Speed Toggle -->
+                    <button id="speedToggleBtn" onclick="toggleAudioSpeed()" class="bg-white hover:bg-sky-50 border border-sky-300 text-sky-900 px-2.5 py-1 rounded-xl text-xs font-extrabold flex items-center gap-1 shadow-sm transition">
+                        <span id="speedIcon" class="text-sm">🐇</span>
+                        <span id="speedLabel" class="text-[11px]">Normal</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Header Row: Wooden Hanging Sign + Langua Learn Brand Logo -->
+            <header class="relative z-10 flex items-center justify-between gap-4 py-1 pb-3">
+                <!-- Wooden Hanging Sign (المعلم: ماجد السويهري) -->
+                <div class="wooden-sign-hang shrink-0" onclick="teacherGreeting()" title="Click to hear Teacher Majed greet you in English!">
+                    <!-- Hanging rope wires -->
+                    <svg class="w-24 sm:w-28 h-6 mx-auto -mb-1 relative z-10" viewBox="0 0 160 36" fill="none">
+                        <line x1="80" y1="4" x2="25" y2="34" stroke="#5C3A1E" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="80" y1="4" x2="135" y2="34" stroke="#5C3A1E" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="80" cy="4" r="5" fill="#D1C4B0" stroke="#4A2F18" stroke-width="2"/>
+                    </svg>
+                    <div class="wooden-plank px-3 py-1.5 text-center">
+                        <div class="flex items-center justify-center gap-1 text-[10px] font-black text-[#361f10] uppercase tracking-wider">
+                            <span>★</span>
+                            <span class="font-cairo text-xs font-bold">المعلم: ماجد السويهري</span>
+                            <span>★</span>
+                        </div>
+                        <div class="text-[9px] font-extrabold text-[#231206] tracking-tight">
+                            Teacher Majed Al-Swaihri
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Brand Logo matching the original sheet: LANGUA LEARN -->
+                <div class="flex items-center gap-2 bg-white/95 border-2 border-orange-200 px-3.5 py-1.5 rounded-2xl shadow-sm">
+                    <!-- Stylized Graduation & Learning Icon -->
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-400 to-amber-500 flex items-center justify-center text-white text-lg font-black shadow-inner">
+                        🎓
+                    </div>
+                    <div class="text-left leading-tight">
+                        <div class="font-fredoka text-sm sm:text-base font-extrabold text-orange-600 tracking-wide">
+                            LANGUA <span class="text-slate-800">LEARN</span>
+                        </div>
+                        <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                            Learn, Grow, Succeed
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Active Word / Audio Feedback Bar with Synchronized Arabic Translation -->
+            <div id="audioStatusBar" class="relative z-10 my-3 bg-white/95 border-2 border-sky-300 rounded-2xl p-3 sm:p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div id="speakerAvatar" class="w-11 h-11 rounded-2xl bg-sky-100 border-2 border-sky-400 flex items-center justify-center text-xl shrink-0">
+                        🔊
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-bold text-slate-400 flex items-center gap-2 uppercase tracking-wider">
+                            <span>Synchronized Audio & Translation</span>
+                            <span id="speakingPill" class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full text-[10px] font-extrabold">Ready</span>
+                        </div>
+                        <div class="flex flex-wrap items-baseline gap-2 mt-0.5">
+                            <span id="liveSpokenText" class="font-fredoka text-xl sm:text-2xl font-extrabold text-slate-900 tracking-wide">
+                                Click any word or sentence to listen!
+                            </span>
+                            <span id="liveArabicText" class="hidden font-cairo text-sm font-bold bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded-lg border border-amber-300" dir="rtl"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Global Action Controls -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <button onclick="checkEverything()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2 rounded-xl text-xs sm:text-sm shadow flex items-center gap-1.5 transition">
+                        <span>✅</span>
+                        <span>Check Answers (فحص الإجابات)</span>
+                    </button>
+                    <button onclick="resetWholeSheet()" class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-bold px-3 py-2 rounded-xl text-xs sm:text-sm shadow-sm transition">
+                        <span>🔄</span>
+                        <span>Reset (إعادة)</span>
+                    </button>
+                </div>
+            </div>
+            <!-- SECTION 1: WRITE THE MISSING LETTER (أوجد الحرف الناقص) -->
+            <section class="relative z-10 mt-5">
+                <!-- Section 1 Header Title -->
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pb-2 mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">✏️</span>
+                        <h2 class="comic-section-title text-2xl sm:text-3xl">
+                            Write the missing letter.
+                        </h2>
+                    </div>
+                    <div class="bg-white/95 border border-slate-200 px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm flex items-center gap-1.5">
+                        <span class="font-cairo text-xs font-bold text-slate-800">اكتب الحرف الناقص في الكلمة</span>
+                        <span class="text-slate-300">•</span>
+                        <span class="text-sky-700 font-extrabold">12 Words</span>
+                    </div>
+                </div>
+
+                <!-- Cream Card with 12 Missing Letter Items (Exact 3-column layout matching worksheet) -->
+                <div class="cream-exercise-card p-4 sm:p-6 md:p-7">
+                    <div id="missingLettersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 md:gap-4">
+                        <!-- Populated dynamically via JS: 1) di_ferent ... 12) o_d -->
+                    </div>
+                </div>
+            </section>
+            <!-- SECTION 2: MATCH THE FOLLOWING (وصل الجمل) -->
+            <section class="relative z-10 mt-8 mb-4">
+                <!-- Section 2 Header Title -->
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pb-2 mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">🔗</span>
+                        <h2 class="comic-section-title text-2xl sm:text-3xl">
+                            Match the following
+                        </h2>
+                    </div>
+                    <div class="bg-white/95 border border-slate-200 px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm flex items-center gap-1.5">
+                        <span class="font-cairo text-xs font-bold text-slate-800">صل السؤال في اليسار بالإجابة المناسبة في اليمين</span>
+                        <span class="text-slate-300">•</span>
+                        <span class="text-sky-700 font-extrabold">5 Questions</span>
+                    </div>
+                </div>
+
+                <!-- Two-Column Matching Board with SVG Connecting Lines Canvas -->
+                <div id="matchingBoardContainer" class="matching-box-container p-3 sm:p-5">
+                    
+                    <!-- SVG Overlay for Connecting Lines -->
+                    <svg id="connectionSvgCanvas"></svg>
+
+                    <!-- Inner Grid: Left Questions (Purple) and Right Answers (Pink) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 relative z-10">
+                        
+                        <!-- Left Column: Questions 1 to 5 -->
+                        <div class="flex flex-col gap-3" id="matchQuestionsList">
+                            <!-- Injected dynamically via JS: 1) what is exciting at school? (....) -->
+                        </div>
+
+                        <!-- Right Column: Answers a to e -->
+                        <div class="flex flex-col gap-3" id="matchAnswersList">
+                            <!-- Injected dynamically via JS: a) Fish ... e) Presents make me surprised -->
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <!-- Bottom Success Completion Banner -->
+            <div id="completionBanner" class="hidden relative z-10 mt-6 bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-500 text-white p-5 rounded-3xl shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-4xl animate-bounce">🎉</span>
+                    <div>
+                        <div class="text-lg font-black font-fredoka">Exceptional Work! أحسنت! كل الإجابات صحيحة ومتقنة!</div>
+                        <div class="text-xs sm:text-sm text-emerald-100 font-medium">You have completed all 12 missing letters and connected all 5 sentences perfectly!</div>
+                    </div>
+                </div>
+                <button onclick="resetWholeSheet()" class="bg-white text-emerald-900 hover:bg-emerald-50 font-black px-5 py-2.5 rounded-2xl text-sm shadow-md transition shrink-0">
+                    Play Again 🔄
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <footer class="relative z-10 mt-6 pt-3 border-t-2 border-dashed border-amber-300/70 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-bold text-slate-500">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                    <span>Teacher Majed Al-Swaihri • Langua Learn Interactive Worksheet</span>
+                </div>
+                <div class="flex items-center gap-3 font-cairo">
+                    <span>انقر على أي كلمة أو جملة للاستماع إليها مع إضاءة النصوص وترجمتها</span>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+    <script>
+        /**
+         * Authentic Dataset from Teacher Majed Al-Swaihri's Worksheet
+         */
+
+        // Section 1: The 12 Words with Missing Letters
+        const MISSING_LETTER_ITEMS = [
+            { id: 1,  prefix: 'di',    missing: 'f', suffix: 'ferent', fullWord: 'different', arabic: 'مختلف' },
+            { id: 2,  prefix: 'af',    missing: 'r', suffix: 'aid.',   fullWord: 'afraid',    arabic: 'خائف' },
+            { id: 3,  prefix: 'ex',    missing: 'c', suffix: 'iting.', fullWord: 'exciting',  arabic: 'مثير / ممتع' },
+            { id: 4,  prefix: 'naugh', missing: 't', suffix: 'y',      fullWord: 'naughty',   arabic: 'مشاغب' },
+            { id: 5,  prefix: 'fa',    missing: 'v', suffix: 'orite.', fullWord: 'favorite',  arabic: 'مفضل' },
+            { id: 6,  prefix: 'ter',   missing: 'r', suffix: 'ible.',  fullWord: 'terrible',  arabic: 'سيئ / فظيع' },
+            { id: 7,  prefix: 'da',    missing: 'n', suffix: 'gerous', fullWord: 'dangerous', arabic: 'خطير' },
+            { id: 8,  prefix: 'sur',   missing: 'p', suffix: 'ised',   fullWord: 'surprised', arabic: 'متفاجئ' },
+            { id: 9,  prefix: 'br',    missing: 'i', suffix: 'llint.', fullWord: 'brilliant', arabic: 'ذكي / رائع' },
+            { id: 10, prefix: 'hap',   missing: 'p', suffix: 'y.',     fullWord: 'happy',     arabic: 'سعيد' },
+            { id: 11, prefix: 'laug',  missing: 'h', suffix: '.',      fullWord: 'laugh',     arabic: 'يضحك' },
+            { id: 12, prefix: 'o',     missing: 'l', suffix: 'd',      fullWord: 'old',       arabic: 'قديم / كبير بالسن' }
+        ];
+
+        // Section 2: Match the Following (5 Questions & 5 Answers)
+        const MATCH_QUESTIONS = [
+            { id: 'q1', num: 1, text: 'what is exciting at school?', arabic: 'ما المثير / الممتع في المدرسة؟', correctLetter: 'c' },
+            { id: 'q2', num: 2, text: 'What are you afraid of?', arabic: 'مما تخاف؟', correctLetter: 'd' },
+            { id: 'q3', num: 3, text: 'What Makes you surprised?', arabic: 'ما الذي يجعلك متفاجئاً؟', correctLetter: 'e' },
+            { id: 'q4', num: 4, text: 'which food do you think smells terrible?', arabic: 'أي طعام تعتقد أن رائحته فظيعة؟', correctLetter: 'a' },
+            { id: 'q5', num: 5, text: 'Who is naughty in your family?', arabic: 'من المشاغب في عائلتك؟', correctLetter: 'b' }
+        ];
+
+        const MATCH_ANSWERS = [
+            { letter: 'a', text: 'Fish', arabic: 'السمك' },
+            { letter: 'b', text: 'My little brother.', arabic: 'أخي الصغير' },
+            { letter: 'c', text: 'Art class is exciting', arabic: 'حصة الرسم مثيرة وممتعة' },
+            { letter: 'd', text: 'I am afraid of spiders', arabic: 'أنا أخاف من العناكب' },
+            { letter: 'e', text: 'Presents make me surprised', arabic: 'الهدايا تجعلني متفاجئاً ومسروراً' }
+        ];
+
+        // State Tracking
+        let userMissingLetters = {}; // { [itemId]: 'f' }
+        let userMatches = {};        // { [qId]: 'c' }
+        let activeMatchSource = null; // Currently clicked question waiting for an answer
+        let gameScore = 0;
+        let isSlowSpeed = false;
+        let isCheckedMode = false;
+
+        // Voice Engine State
+        let bestActiveVoice = null;
+        let availableEngVoices = [];
+        let audioContext = null;
+        // Web Audio Synthesizer (for chimes, clicks, success chords)
+        function getWebAudio() {
+            if (!audioContext) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) audioContext = new AudioCtx();
+            }
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            return audioContext;
+        }
+
+        function playSynthSound(type) {
+            try {
+                const ctx = getWebAudio();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                if (type === 'tap') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(540, now);
+                    osc.frequency.exponentialRampToValueAtTime(780, now + 0.05);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'connect') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                } else if (type === 'correct') {
+                    const freqs = [523.25, 659.25, 783.99, 1046.50];
+                    freqs.forEach((f, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(f, now + i * 0.07);
+                        gain.gain.setValueAtTime(0.18, now + i * 0.07);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.22);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + i * 0.07);
+                        osc.stop(now + i * 0.07 + 0.22);
+                    });
+                } else if (type === 'wrong') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(280, now);
+                    osc.frequency.linearRampToValueAtTime(160, now + 0.2);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                }
+            } catch (e) {
+                // AudioContext guarded
+            }
+        }
+
+        // Voice Engine Evaluation & Initialization
+        function evaluateVoiceQuality(voice) {
+            let score = 0;
+            const name = voice.name.toLowerCase();
+            const lang = voice.lang.toLowerCase();
+            if (!lang.startsWith('en')) return -1000;
+            if (name.includes('natural') || name.includes('neural') || name.includes('studio') || name.includes('journey')) score += 80;
+            if (name.includes('online')) score += 40;
+            if (name.includes('google')) score += 60;
+            if (name.includes('microsoft')) score += 55;
+            if (name.includes('samantha') || name.includes('siri') || name.includes('alex') || name.includes('ava')) score += 45;
+            if (lang === 'en-us') score += 25;
+            return score;
+        }
+
+        function initVoiceEngine() {
+            if (!('speechSynthesis' in window)) return;
+            const populate = () => {
+                const voices = window.speechSynthesis.getVoices();
+                if (!voices || voices.length === 0) return;
+                availableEngVoices = voices
+                    .filter(v => v.lang.toLowerCase().startsWith('en'))
+                    .sort((a, b) => evaluateVoiceQuality(b) - evaluateVoiceQuality(a));
+
+                if (availableEngVoices.length === 0) availableEngVoices = voices;
+                if (!bestActiveVoice || !availableEngVoices.includes(bestActiveVoice)) {
+                    bestActiveVoice = availableEngVoices[0];
+                }
+
+                const selector = document.getElementById('voiceSelector');
+                if (selector) {
+                    selector.innerHTML = availableEngVoices.map(v => {
+                        let tag = 'HD';
+                        const n = v.name.toLowerCase();
+                        if (n.includes('natural') || n.includes('neural')) tag = '🌟 Natural';
+                        else if (n.includes('google')) tag = '✨ Google';
+                        else if (n.includes('microsoft')) tag = '💎 Microsoft';
+                        else if (n.includes('apple') || n.includes('samantha')) tag = '🍎 Apple';
+                        const cleanName = v.name.replace(/Microsoft|Google|Apple|English|United States|Desktop|Mobile/gi, '').trim() || v.name;
+                        return `<option value="${v.name}" ${v.name === bestActiveVoice.name ? 'selected' : ''}>${tag} - ${cleanName} (${v.lang})</option>`;
+                    }).join('');
+                }
+            };
+            populate();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = populate;
+            }
+        }
+
+        function onVoiceSelectionChange() {
+            const selector = document.getElementById('voiceSelector');
+            const chosen = availableEngVoices.find(v => v.name === selector.value);
+            if (chosen) {
+                bestActiveVoice = chosen;
+                playSynthSound('tap');
+                speakSentence('Langua Learn voice updated!');
+            }
+        }
+
+        function toggleAudioSpeed() {
+            isSlowSpeed = !isSlowSpeed;
+            document.getElementById('speedIcon').textContent = isSlowSpeed ? '🐢' : '🐇';
+            document.getElementById('speedLabel').textContent = isSlowSpeed ? 'Slow' : 'Normal';
+            playSynthSound('tap');
+        }
+        /**
+         * Speaks English text with synchronized highlight and Arabic translation display
+         */
+        function speakSentence(text, arabic = '', highlightElementId = null) {
+            if (!('speechSynthesis' in window)) return;
+            try {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = bestActiveVoice ? bestActiveVoice.lang : 'en-US';
+                if (bestActiveVoice) utter.voice = bestActiveVoice;
+
+                utter.rate = isSlowSpeed ? 0.68 : 0.92;
+                utter.pitch = 1.0;
+                utter.volume = 1.0;
+
+                const liveText = document.getElementById('liveSpokenText');
+                const liveArabic = document.getElementById('liveArabicText');
+                const speakingPill = document.getElementById('speakingPill');
+
+                liveText.textContent = text;
+                liveText.classList.add('audio-speaking-text');
+                speakingPill.textContent = 'Speaking...';
+                speakingPill.className = 'bg-sky-500 text-white px-2 py-0.5 rounded-full text-[10px] font-extrabold animate-pulse';
+
+                if (arabic) {
+                    liveArabic.textContent = arabic;
+                    liveArabic.classList.remove('hidden');
+                } else {
+                    liveArabic.classList.add('hidden');
+                }
+
+                let targetElem = highlightElementId ? document.getElementById(highlightElementId) : null;
+                if (targetElem) targetElem.classList.add('ring-4', 'ring-sky-400', 'bg-sky-50');
+
+                utter.onend = () => {
+                    liveText.classList.remove('audio-speaking-text');
+                    speakingPill.textContent = 'Ready';
+                    speakingPill.className = 'bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full text-[10px] font-extrabold';
+                    if (targetElem) targetElem.classList.remove('ring-4', 'ring-sky-400', 'bg-sky-50');
+                };
+
+                utter.onerror = () => {
+                    liveText.classList.remove('audio-speaking-text');
+                    speakingPill.textContent = 'Ready';
+                    if (targetElem) targetElem.classList.remove('ring-4', 'ring-sky-400', 'bg-sky-50');
+                };
+
+                if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+                window.speechSynthesis.speak(utter);
+            } catch (err) {
+                // Speech guarded
+            }
+        }
+
+        function teacherGreeting() {
+            playSynthSound('tap');
+            speakSentence(
+                "Welcome students! Write the missing letter in each word, then match each question with the correct answer!",
+                "أهلاً بكم يا أبطال! اكتب الحرف الناقص في كل كلمة، ثم صل كل سؤال بإجابته الصحيحة!"
+            );
+        }
+        /**
+         * Renders Section 1: The 12 Words with Missing Letter Slots
+         */
+        function renderMissingLettersSection() {
+            const container = document.getElementById('missingLettersGrid');
+            container.innerHTML = MISSING_LETTER_ITEMS.map((item, idx) => {
+                const currentVal = userMissingLetters[item.id] || '';
+                const isCorrect = currentVal.toLowerCase() === item.missing.toLowerCase();
+
+                let validationClass = '';
+                if (isCheckedMode && currentVal) {
+                    validationClass = isCorrect ? 'slot-correct' : 'slot-wrong';
+                }
+
+                return `
+                <div id="word-item-${item.id}"
+                     class="flex items-center justify-between p-2 sm:p-2.5 rounded-2xl bg-white/80 hover:bg-white border border-amber-200/90 shadow-sm transition overflow-hidden">
+                    
+                    <!-- Left: Item Number & Word with Missing Slot (Strict single line) -->
+                    <div class="flex items-center gap-1.5 whitespace-nowrap flex-nowrap min-w-0 shrink-0">
+                        <span class="font-fredoka font-bold text-slate-800 text-sm sm:text-base min-w-[20px] shrink-0">
+                            ${item.id})
+                        </span>
+                        
+                        <div class="inline-flex items-center whitespace-nowrap flex-nowrap shrink-0">
+                            <span class="font-fredoka font-extrabold text-slate-900 text-base sm:text-lg tracking-normal">
+                                ${item.prefix}
+                            </span>
+
+                            <input type="text"
+                                   id="slot-${item.id}"
+                                   maxlength="1"
+                                   value="${currentVal}"
+                                   oninput="handleMissingLetterInput(${item.id}, this)"
+                                   onkeydown="handleMissingLetterKeydown(event, ${item.id})"
+                                   onclick="playSynthSound('tap')"
+                                   class="missing-letter-slot ${validationClass}"
+                                   autocomplete="off"
+                                   autocapitalize="none"
+                                   spellcheck="false"
+                                   title="Enter the missing letter" />
+
+                            <span class="font-fredoka font-extrabold text-slate-900 text-base sm:text-lg tracking-normal">
+                                ${item.suffix}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Arabic Meaning Pill & Sound Button -->
+                    <div class="flex items-center gap-1.5 shrink-0 ml-2">
+                        <span class="hidden sm:inline-block font-cairo text-xs font-bold text-slate-600 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 whitespace-nowrap" dir="rtl">
+                            ${item.arabic}
+                        </span>
+                        <button onclick="speakSentence('${item.fullWord}', '${item.arabic}', 'word-item-${item.id}')"
+                                class="w-8 h-8 rounded-xl bg-sky-100 hover:bg-sky-200 text-sky-700 flex items-center justify-center text-sm transition shrink-0"
+                                title="Listen to word">
+                            🔊
+                        </button>
+                    </div>
+
+                </div>`;
+            }).join('');
+        }
+
+        function handleMissingLetterInput(itemId, inputElem) {
+            const val = inputElem.value.trim().toLowerCase();
+            inputElem.value = val;
+            userMissingLetters[itemId] = val;
+            isCheckedMode = false;
+            playSynthSound('tap');
+
+            // Auto-advance to next slot if filled
+            if (val.length === 1 && itemId < 12) {
+                const nextSlot = document.getElementById(`slot-${itemId + 1}`);
+                if (nextSlot) nextSlot.focus();
+            }
+        }
+
+        function handleMissingLetterKeydown(e, itemId) {
+            if (e.key === 'Backspace' && !e.target.value && itemId > 1) {
+                const prevSlot = document.getElementById(`slot-${itemId - 1}`);
+                if (prevSlot) {
+                    prevSlot.focus();
+                }
+            } else if (e.key === 'Enter') {
+                checkEverything();
+            }
+        }
+        /**
+         * Renders Section 2: Match the Following Questions and Answers
+         */
+        function renderMatchingSection() {
+            const qContainer = document.getElementById('matchQuestionsList');
+            const aContainer = document.getElementById('matchAnswersList');
+
+            // Render Questions 1 to 5 (Left purple boxes)
+            qContainer.innerHTML = MATCH_QUESTIONS.map(q => {
+                const matchedLetter = userMatches[q.id];
+                const isActive = activeMatchSource === q.id;
+                const isConnected = !!matchedLetter;
+
+                return `
+                <div id="match-q-${q.id}"
+                     onclick="handleQuestionClick('${q.id}')"
+                     class="match-row-left p-3 sm:p-3.5 flex items-center justify-between gap-2 shadow-sm ${isActive ? 'is-active-source' : ''} ${isConnected ? 'is-connected' : ''}">
+                    
+                    <div class="flex items-center gap-2 flex-1">
+                        <span class="font-fredoka font-black text-purple-900 text-base">
+                            ${q.num})
+                        </span>
+                        <div class="leading-snug">
+                            <span class="font-fredoka font-bold text-slate-900 text-sm sm:text-base">
+                                ${q.text}
+                            </span>
+                            <div class="font-cairo text-xs text-purple-700 font-semibold" dir="rtl">
+                                ${q.arabic}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selected parenthesis slot e.g. ( c ) -->
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <div class="w-10 h-8 rounded-lg bg-white border-2 ${matchedLetter ? 'border-purple-600 bg-purple-100 font-black text-purple-900' : 'border-purple-300 text-slate-400'} font-fredoka flex items-center justify-center text-sm shadow-inner">
+                            (${matchedLetter ? matchedLetter.toUpperCase() : '...'})
+                        </div>
+
+                        ${matchedLetter ? `
+                            <button onclick="event.stopPropagation(); disconnectPair('${q.id}')"
+                                    class="w-6 h-6 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-700 text-xs font-bold flex items-center justify-center transition"
+                                    title="Disconnect">
+                                ✕
+                            </button>
+                        ` : ''}
+
+                        <button onclick="event.stopPropagation(); speakSentence('${q.text}', '${q.arabic}', 'match-q-${q.id}')"
+                                class="w-8 h-8 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-700 flex items-center justify-center text-sm transition"
+                                title="Listen to question">
+                            🔊
+                        </button>
+                    </div>
+
+                </div>`;
+            }).join('');
+
+            // Render Answers a to e (Right pink boxes)
+            aContainer.innerHTML = MATCH_ANSWERS.map(ans => {
+                // Find if any question is connected to this answer
+                const connectedQ = Object.entries(userMatches).find(([_, letter]) => letter === ans.letter);
+
+                return `
+                <div id="match-a-${ans.letter}"
+                     onclick="handleAnswerClick('${ans.letter}')"
+                     class="match-row-right p-3 sm:p-3.5 flex items-center justify-between gap-2 shadow-sm ${connectedQ ? 'ring-2 ring-rose-400' : ''}">
+                    
+                    <div class="flex items-center gap-2 flex-1">
+                        <span class="font-fredoka font-black text-rose-700 text-base">
+                            ${ans.letter})
+                        </span>
+                        <div class="leading-snug">
+                            <span class="font-fredoka font-bold text-slate-900 text-sm sm:text-base">
+                                ${ans.text}
+                            </span>
+                            <div class="font-cairo text-xs text-rose-700 font-semibold" dir="rtl">
+                                ${ans.arabic}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="event.stopPropagation(); speakSentence('${ans.text}', '${ans.arabic}', 'match-a-${ans.letter}')"
+                            class="w-8 h-8 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-700 flex items-center justify-center text-sm transition shrink-0"
+                            title="Listen to answer">
+                        🔊
+                    </button>
+
+                </div>`;
+            }).join('');
+
+            // Redraw SVG connecting lines
+            requestAnimationFrame(drawConnectingLines);
+        }
+
+        function handleQuestionClick(qId) {
+            playSynthSound('tap');
+            const q = MATCH_QUESTIONS.find(item => item.id === qId);
+            if (q) speakSentence(q.text, q.arabic, `match-q-${qId}`);
+
+            if (activeMatchSource === qId) {
+                activeMatchSource = null; // deselect
+            } else {
+                activeMatchSource = qId;
+            }
+            renderMatchingSection();
+        }
+
+        function handleAnswerClick(letter) {
+            if (activeMatchSource) {
+                // Connect active question to this answer
+                userMatches[activeMatchSource] = letter;
+                playSynthSound('connect');
+                const ans = MATCH_ANSWERS.find(a => a.letter === letter);
+                if (ans) speakSentence(ans.text, ans.arabic, `match-a-${letter}`);
+
+                activeMatchSource = null;
+                isCheckedMode = false;
+                renderMatchingSection();
+            } else {
+                // Just click to listen
+                playSynthSound('tap');
+                const ans = MATCH_ANSWERS.find(a => a.letter === letter);
+                if (ans) speakSentence(ans.text, ans.arabic, `match-a-${letter}`);
+            }
+        }
+
+        function disconnectPair(qId) {
+            playSynthSound('tap');
+            delete userMatches[qId];
+            isCheckedMode = false;
+            renderMatchingSection();
+        }
+
+        /**
+         * Draws smooth bezier curved lines between matched Question rows and Answer rows
+         */
+        function drawConnectingLines() {
+            const svg = document.getElementById('connectionSvgCanvas');
+            const container = document.getElementById('matchingBoardContainer');
+            if (!svg || !container) return;
+
+            // Only draw lines on medium or larger screens where columns are side by side
+            if (window.innerWidth < 768) {
+                svg.innerHTML = '';
+                return;
+            }
+
+            const containerRect = container.getBoundingClientRect();
+            svg.setAttribute('viewBox', `0 0 ${containerRect.width} ${containerRect.height}`);
+
+            const colors = ['#8B5CF6', '#EC4899', '#06B6D4', '#F59E0B', '#10B981'];
+            let pathsHtml = '';
+
+            Object.entries(userMatches).forEach(([qId, letter], index) => {
+                const qElem = document.getElementById(`match-q-${qId}`);
+                const aElem = document.getElementById(`match-a-${letter}`);
+
+                if (qElem && aElem) {
+                    const qRect = qElem.getBoundingClientRect();
+                    const aRect = aElem.getBoundingClientRect();
+
+                    const x1 = qRect.right - containerRect.left - 10;
+                    const y1 = qRect.top + qRect.height / 2 - containerRect.top;
+
+                    const x2 = aRect.left - containerRect.left + 10;
+                    const y2 = aRect.top + aRect.height / 2 - containerRect.top;
+
+                    const color = colors[index % colors.length];
+                    const dx = Math.abs(x2 - x1) * 0.55;
+                    const pathData = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+
+                    pathsHtml += `
+                    <g>
+                        <circle cx="${x1}" cy="${y1}" r="5" fill="${color}" />
+                        <circle cx="${x2}" cy="${y2}" r="5" fill="${color}" />
+                        <path d="${pathData}" class="connection-bezier-line" stroke="${color}" />
+                    </g>`;
+                }
+            });
+
+            svg.innerHTML = pathsHtml;
+        }
+
+        window.addEventListener('resize', () => {
+            requestAnimationFrame(drawConnectingLines);
+        });
+        /**
+         * Checks both Section 1 (Missing Letters) and Section 2 (Matching)
+         */
+        function checkEverything() {
+            isCheckedMode = true;
+            let missingCorrect = 0;
+            let matchCorrect = 0;
+
+            // 1. Evaluate Missing Letters
+            MISSING_LETTER_ITEMS.forEach(item => {
+                const entered = (userMissingLetters[item.id] || '').toLowerCase();
+                const slot = document.getElementById(`slot-${item.id}`);
+                if (entered === item.missing.toLowerCase()) {
+                    missingCorrect++;
+                    if (slot) {
+                        slot.classList.add('slot-correct');
+                        slot.classList.remove('slot-wrong');
+                    }
+                } else if (entered) {
+                    if (slot) {
+                        slot.classList.add('slot-wrong');
+                        slot.classList.remove('slot-correct');
+                    }
+                } else {
+                    if (slot) slot.classList.remove('slot-correct', 'slot-wrong');
+                }
+            });
+
+            // 2. Evaluate Matching
+            MATCH_QUESTIONS.forEach(q => {
+                const userLetter = userMatches[q.id];
+                if (userLetter === q.correctLetter) {
+                    matchCorrect++;
+                }
+            });
+
+            const totalScore = missingCorrect + matchCorrect;
+            const maxScore = 17; // 12 + 5
+
+            addScore(totalScore * 5);
+
+            if (totalScore === maxScore) {
+                playSynthSound('correct');
+                fireConfetti();
+                document.getElementById('completionBanner').classList.remove('hidden');
+                speakSentence("Fantastic job! All missing letters and sentences are completely correct!", "ممتاز جداً! كل الإجابات صحيحة ومثالية!");
+            } else if (totalScore > 0) {
+                playSynthSound('connect');
+                speakSentence(`You scored ${totalScore} out of ${maxScore}! Good effort!`, `أحسنت! حققت ${totalScore} من ${maxScore}! استمر بالمحاولة!`);
+            } else {
+                playSynthSound('wrong');
+                speakSentence("Try again! Fill in the missing letters and match the sentences!", "حاول مجدداً! اكتب الحروف الناقصة وصل الجمل بشكل صحيح!");
+            }
+
+            renderMatchingSection();
+        }
+
+        function resetWholeSheet() {
+            userMissingLetters = {};
+            userMatches = {};
+            activeMatchSource = null;
+            isCheckedMode = false;
+            document.getElementById('completionBanner').classList.add('hidden');
+            playSynthSound('tap');
+
+            renderMissingLettersSection();
+            renderMatchingSection();
+            speakSentence("Worksheet has been reset! Let's solve it again!", "تمت إعادة تعيين ورقة العمل! هيا لنحلها معاً!");
+        }
+
+        function addScore(points) {
+            gameScore += points;
+            const el = document.getElementById('gameScore');
+            if (el) {
+                el.textContent = gameScore;
+                el.classList.add('scale-125', 'text-amber-500');
+                setTimeout(() => el.classList.remove('scale-125', 'text-amber-500'), 300);
+            }
+        }
+
+        // Celebration Confetti System
+        let confettiParticles = [];
+        let confettiAnimId = null;
+
+        function fireConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            if (!canvas) return;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const ctx = canvas.getContext('2d');
+
+            const colors = ['#F59E0B', '#EF4444', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899', '#FDE047', '#06B6D4'];
+            confettiParticles = [];
+
+            for (let i = 0; i < 120; i++) {
+                confettiParticles.push({
+                    x: Math.random() * canvas.width,
+                    y: -20 - Math.random() * 50,
+                    size: 8 + Math.random() * 8,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    vx: -3 + Math.random() * 6,
+                    vy: 3 + Math.random() * 5,
+                    rot: Math.random() * 360,
+                    vrot: -5 + Math.random() * 10,
+                    opacity: 1
+                });
+            }
+
+            if (confettiAnimId) cancelAnimationFrame(confettiAnimId);
+
+            function step() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+
+                confettiParticles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.rot += p.vrot;
+                    if (p.y > canvas.height * 0.7) p.opacity -= 0.02;
+
+                    if (p.opacity > 0 && p.y < canvas.height + 40) {
+                        alive = true;
+                        ctx.save();
+                        ctx.globalAlpha = Math.max(0, p.opacity);
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rot * Math.PI) / 180);
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                        ctx.restore();
+                    }
+                });
+
+                if (alive) {
+                    confettiAnimId = requestAnimationFrame(step);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            step();
+        }
+
+        // Initialize application when DOM is ready
+        window.onload = function () {
+            initVoiceEngine();
+            renderMissingLettersSection();
+            renderMatchingSection();
+        };
+    </script>
+</body>
+</html>
